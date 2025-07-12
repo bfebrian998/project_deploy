@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI with Maven and Docker
 
 on:
   push:
@@ -22,3 +22,15 @@ jobs:
 
       - name: Build with Maven
         run: ./mvnw clean install
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: docker build -t bfebrian98/project-java:latest .
+
+      - name: Push Docker Image
+        run: docker push bfebrian98/project-java:latest
