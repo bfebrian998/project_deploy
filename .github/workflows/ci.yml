@@ -35,3 +35,16 @@ jobs:
 
       - name: Push Docker Image
         run: docker push bfebrian98/project-java:latest
+
+      - name: Get Short SHA
+        id: vars
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        run: |
+          docker build -t bfebrian98/project-java:latest -t bfebrian98/project-java:${{ env.SHORT_SHA }} .
+
+      - name: Push Docker Image
+        run: |
+          docker push bfebrian98/project-java:latest
+          docker push bfebrian98/project-java:${{ env.SHORT_SHA }}
