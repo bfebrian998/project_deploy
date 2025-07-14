@@ -1,11 +1,8 @@
-# Gunakan image base Java
 FROM eclipse-temurin:21-jdk
 
-# Set working directory
 WORKDIR /app
 
-# Copy file JAR ke dalam container
-COPY target/*.jar app.jar
-
-# Jalankan aplikasi
+# Ganti nama file sesuai JAR-mu
+COPY target/demo-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
